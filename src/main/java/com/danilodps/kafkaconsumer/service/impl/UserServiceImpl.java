@@ -1,5 +1,6 @@
 package com.danilodps.kafkaconsumer.service.impl;
 
+import com.danilodps.kafkaconsumer.adapter.UserResponse2UserEntity;
 import com.danilodps.kafkaconsumer.entity.UserEntity;
 import com.danilodps.kafkaconsumer.record.response.UserResponse;
 import com.danilodps.kafkaconsumer.repository.UserEntityRepository;
@@ -8,8 +9,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Slf4j
 @Service
@@ -23,10 +22,7 @@ public class UserServiceImpl implements UserService {
     public void create(UserResponse userResponse) {
         log.info("Criando usuário...");
 
-        UserEntity userEntity = UserEntity.builder()
-                .fullName((userResponse.name() + " " + userResponse.lastName()))
-                .createdAt(LocalDateTime.now())
-                .build();
+        UserEntity userEntity = UserResponse2UserEntity.convert(userResponse);
 
         userEntityRepository.saveAndFlush(userEntity);
         log.info("Usuário criado!");

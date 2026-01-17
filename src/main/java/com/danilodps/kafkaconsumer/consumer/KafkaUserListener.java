@@ -17,7 +17,7 @@ public class KafkaUserListener {
     @KafkaListener(groupId = "consumer-group", topics = "topic.user.v1", containerFactory = "listenerContainerFactory")
     public void consumer(UserResponse userResponse){
         try {
-            log.info("name: {}, lastName: {}, createdAt: {}", userResponse.name(), userResponse.lastName(), userResponse.createdAt());
+            log.info("name: {}, lastName: {}", userResponse.name(), userResponse.lastName());
             userService.create(userResponse);
         } catch (Exception e) {
             throw new RuntimeException(e);
