@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.danilodps</groupId>
-	<artifactId>dps-kafka-consumer-producer</artifactId>
+	<artifactId>dps-kafka-consumer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>dps-kafka-consumer-producer</name>
-	<description>Consumer and Producer kafka</description>
+	<description>Consumer kafka</description>
 	<url/>
 	<licenses>
 		<license/>
