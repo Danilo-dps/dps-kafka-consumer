@@ -2,7 +2,7 @@ package com.danilodps.kafkaconsumer.service.impl;
 
 import com.danilodps.kafkaconsumer.adapter.UserResponse2UserEntity;
 import com.danilodps.kafkaconsumer.entity.UserEntity;
-import com.danilodps.kafkaconsumer.record.response.UserResponse;
+import com.danilodps.kafkaconsumer.record.received.UserResponse;
 import com.danilodps.kafkaconsumer.repository.UserEntityRepository;
 import com.danilodps.kafkaconsumer.service.UserService;
 import jakarta.transaction.Transactional;

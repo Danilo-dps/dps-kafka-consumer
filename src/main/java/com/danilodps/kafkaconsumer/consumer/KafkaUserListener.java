@@ -1,6 +1,6 @@
 package com.danilodps.kafkaconsumer.consumer;
 
-import com.danilodps.kafkaconsumer.record.response.UserResponse;
+import com.danilodps.kafkaconsumer.record.received.UserResponse;
 import com.danilodps.kafkaconsumer.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

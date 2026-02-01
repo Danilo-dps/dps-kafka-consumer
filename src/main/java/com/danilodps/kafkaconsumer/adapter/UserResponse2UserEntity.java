@@ -1,7 +1,7 @@
 package com.danilodps.kafkaconsumer.adapter;
 
 import com.danilodps.kafkaconsumer.entity.UserEntity;
-import com.danilodps.kafkaconsumer.record.response.UserResponse;
+import com.danilodps.kafkaconsumer.record.received.UserResponse;
 
 import java.time.LocalDateTime;
 

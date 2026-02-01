@@ -1,4 +1,4 @@
-package com.danilodps.kafkaconsumer.record.response;
+package com.danilodps.kafkaconsumer.record.received;
 
 import lombok.Builder;
 

@@ -1,0 +1,64 @@
+package dps.kafka.consumer;
+
+import com.danilodps.kafkaconsumer.adapter.UserResponse2UserEntity;
+import com.danilodps.kafkaconsumer.entity.UserEntity;
+import com.danilodps.kafkaconsumer.record.received.UserResponse;
+import com.danilodps.kafkaconsumer.repository.UserEntityRepository;
+import com.danilodps.kafkaconsumer.service.impl.UserServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockedStatic;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+class UserServiceImplTest {
+
+    @Mock
+    UserEntityRepository userEntityRepository;
+
+    @InjectMocks
+    UserServiceImpl userService;
+
+    UserEntity userEntity;
+    UserResponse userResponse;
+
+    @BeforeEach
+    void setup(){
+
+        userEntity = UserEntity.builder()
+                .userId(UUID.fromString("871982fe-57a2-4eab-af9f-97e880ee2cbf"))
+                .fullName("Danilo" + " Pereira")
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        userResponse = UserResponse.builder()
+                .userId(userEntity.getUserId().toString())
+                .name(userEntity.getFullName())
+                .build();
+
+        userService = new UserServiceImpl(userEntityRepository);
+    }
+
+    @Test
+    void testCreateAUser() {
+
+        when(userEntityRepository.saveAndFlush(any(UserEntity.class))).thenReturn(userEntity);
+
+        try (MockedStatic<UserResponse2UserEntity> mockedStatic = mockStatic(UserResponse2UserEntity.class)) {
+            mockedStatic.when(() -> UserResponse2UserEntity.convert(any(UserResponse.class)))
+                    .thenReturn(userEntity);
+            userService.create(userResponse);
+            mockedStatic.verify(() -> UserResponse2UserEntity.convert(any(UserResponse.class)));
+        }
+
+        verify(userEntityRepository, atLeastOnce()).saveAndFlush(any(UserEntity.class));
+    }
+}

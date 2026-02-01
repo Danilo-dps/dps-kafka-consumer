@@ -1,6 +1,6 @@
 package com.danilodps.kafkaconsumer.service;
 
-import com.danilodps.kafkaconsumer.record.response.UserResponse;
+import com.danilodps.kafkaconsumer.record.received.UserResponse;
 
 public interface UserService {
 
