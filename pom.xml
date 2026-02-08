@@ -5,13 +5,13 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.1</version>
+		<version>4.0.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.danilodps</groupId>
 	<artifactId>dps-kafka-consumer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>dps-kafka-consumer-producer</name>
+	<name>dps-kafka-consumer</name>
 	<description>Consumer kafka</description>
 	<url/>
 	<licenses>
