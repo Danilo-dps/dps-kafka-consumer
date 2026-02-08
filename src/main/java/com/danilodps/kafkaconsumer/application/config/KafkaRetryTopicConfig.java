@@ -4,6 +4,7 @@ import com.danilodps.kafkaconsumer.domain.record.received.UserResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -21,17 +22,18 @@ import java.util.Map;
 @Configuration
 @EnableKafka
 @EnableConfigurationProperties(KafkaProperties.class)
-public class KafkaConfig {
+public class KafkaRetryTopicConfig {
 
     @Value("${spring.kafka.consumer.group-id}")
     private String consumerGroupId;
 
     private final KafkaProperties kafkaProperties;
 
-    public KafkaConfig(KafkaProperties kafkaProperties) { this.kafkaProperties = kafkaProperties;}
+    public KafkaRetryTopicConfig(KafkaProperties kafkaProperties) { this.kafkaProperties = kafkaProperties;}
 
-    @Bean
-    ConsumerFactory<String, UserResponse> consumerFactory(){
+    @Bean("consumerFactoryRetry")
+    ConsumerFactory<String, UserResponse> consumerFactoryRetry(){
+        log.info("Criando: consumerFactoryRetry");
         Map<String, Object> configConsumerFactory = new HashMap<>();
         configConsumerFactory.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.bootstrap().servers());
         configConsumerFactory.put(ConsumerConfig.GROUP_ID_CONFIG, consumerGroupId);
@@ -42,9 +44,10 @@ public class KafkaConfig {
         return new DefaultKafkaConsumerFactory<>(configConsumerFactory);
     }
 
-    @Bean("listenerContainerFactory")
-    ConcurrentKafkaListenerContainerFactory<String, UserResponse> listenerContainerFactory(
-            ConsumerFactory<String, UserResponse> consumerFactory){
+    @Bean("listenerContainerFactoryRetry")
+    ConcurrentKafkaListenerContainerFactory<String, UserResponse> listenerContainerFactoryRetry(
+            @Qualifier("consumerFactoryRetry") ConsumerFactory<String, UserResponse> consumerFactory){
+        log.info("Criando: listenerContainerFactoryRetry");
         ConcurrentKafkaListenerContainerFactory<String, UserResponse> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory);
